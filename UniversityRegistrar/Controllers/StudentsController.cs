@@ -33,6 +33,14 @@ namespace UniversityRegistrar.Controllers
             newStudent.Save();
             return RedirectToAction("Index");
         }
+        [HttpPost("/students/delete/{id}")]
+        public ActionResult Delete(int id)
+        {
+            Student foundStudent = Student.Find(id);
+
+            foundStudent.Delete();
+            return RedirectToAction("Index");
+        }
 
         
     }

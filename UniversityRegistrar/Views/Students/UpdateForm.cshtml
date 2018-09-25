@@ -1,0 +1,13 @@
+@{
+Layout = "_Layout";
+}
+<h1>Update Current Record</h1>
+<form class="form-group" action='/students/update' method='post'>
+    <label>Full Name
+        <input type="text" name="newName" class="form-control" required>
+    </label>
+    <label>Enrollment Date
+        <input type="date" name="newDate" class="form-control" required>
+    </label>
+    <button class="btn" type="submit">Submit</button>
+</form>

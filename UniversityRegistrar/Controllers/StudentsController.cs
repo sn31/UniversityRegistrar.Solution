@@ -41,7 +41,20 @@ namespace UniversityRegistrar.Controllers
             foundStudent.Delete();
             return RedirectToAction("Index");
         }
-
+        [HttpGet("/students/update")]
+        public ActionResult UpdateForm()
+        {
+            return View();
+        }
+        // [HttpPost("/students/update/{id}")]
+        // public ActionResult Update(int id)
+        // {
+        //     Student foundStudent = Student.Find(id);
+        //     foundStudent.Name = Request.Form["newName"];
+        //     foundStudent.enrollmentDate = Convert.ToDateTime(Request.Form["newDate"]);
+        //     foundStudent.Save();
+        //     return RedirectToAction("Index");
+        // }
         
     }
 }

@@ -12,7 +12,7 @@ namespace UniversityRegistrar.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
             List<Course> allCourses = Course.GetAll();
-            List<Course> allStudents = Student.GetAll();
+            List<Student> allStudents = Student.GetAll();
             model.Add("courses", allCourses);
             model.Add("students", allStudents);
             return View(model);
@@ -34,15 +34,8 @@ namespace UniversityRegistrar.Controllers
             return RedirectToAction("Index");
         }
 
-        // [HttpPost("/courses")]
-        // public ActionResult CreateForm(int courseId)
-        // {
-        //     Dictionary<string, object> model = new Dictionary<string, object>();
-        //     Student newStudent = Student.Find(courseId);
-        //     return  RedirectToAction("Index");
-        // }
 
-        [HttpPost("/courses/delete/{id}")]
+        [HttpPost("/courses/delete/")]
         public ActionResult Delete(int id)
         {
             Course foundCourse = Course.Find(id);

@@ -7,11 +7,12 @@ namespace UniversityRegistrar.Controllers
 {
     public class StudentsController : Controller
     {
+        [HttpGet("/students/update")]
         [HttpGet("/students")]
         public ActionResult Index()
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
-             List<Course> allCourses = Course.GetAll();
+            List<Course> allCourses = Course.GetAll();
             List<Student> allStudents = Student.GetAll();
             model.Add("courses", allCourses);
             model.Add("students", allStudents);
@@ -41,20 +42,23 @@ namespace UniversityRegistrar.Controllers
             foundStudent.Delete();
             return RedirectToAction("Index");
         }
-        [HttpGet("/students/update")]
-        public ActionResult UpdateForm()
+        [HttpGet("/students/update/{id}")]
+        public ActionResult UpdateForm(int id)
         {
             return View();
         }
-        // [HttpPost("/students/update/{id}")]
-        // public ActionResult Update(int id)
-        // {
-        //     Student foundStudent = Student.Find(id);
-        //     foundStudent.Name = Request.Form["newName"];
-        //     foundStudent.enrollmentDate = Convert.ToDateTime(Request.Form["newDate"]);
-        //     foundStudent.Save();
-        //     return RedirectToAction("Index");
-        // }
+        [HttpPost("/students/update/{id}")]
+        public ActionResult Update(int id)
+        {
+            Student foundStudent = Student.Find(id);
+            string updateName= Request.Form["updateName"];
+            DateTime updateDate = Convert.ToDateTime(Request.Form["updateDate"]);
+
+           foundStudent.Update(updateName,updateDate);
+           foundStudent.Save();
+           
+            return RedirectToAction("Index");
+        }
         
     }
 }

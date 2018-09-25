@@ -76,5 +76,29 @@ namespace UniversityRegistrar.Models
             return allStudents;
         }
 
+        public static Student Find(int searchId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT*FROM students WHERE id = @searchId;";
+            cmd.Parameters.AddWithValue("@searchId", searchId);
+
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            rdr.Read();
+            int Id = rdr.GetInt32(0);
+            string Name = rdr.GetString(1);
+            DateTime enrollmentDate = rdr.GetDateTime(2);
+            Student foundStudent = new Student(Name, enrollmentDate, Id);
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return foundStudent;
+        }
+
     }
 }

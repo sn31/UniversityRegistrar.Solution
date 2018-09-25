@@ -27,25 +27,25 @@ Layout = "_Layout";
     {
         <div class="row">
             <div class="col">
-                <p>student.Name</p>
+                <p>@student.Name</p>
             </div>
             <div class="col">
-                <p>student.enrollmentDate</p>
+                <p>@student.enrollmentDate</p>
             </div>
             <div class="col">
-                @foreach(var course in student.GetCourses())
+                @foreach(var course in @student.GetCourses())
                 {
-                    <p>course.CourseName + " " + course.CourseNumber</p>
+                    <p>@course.CourseName + " " + @course.CourseNumber</p>
                 }
             </div>
             <div class="col">
                <form class="form-group" action='/students/student.Id/update' method='post'>
-                   <button class="btn" type="submit">Update Record</button>
+                   <button class="btn btn-info" type="submit">Update Record</button>
                </form>
             </div>
             <div class="col">
                 <form class="form-group" action='/students/' method='post'>
-                   <button class="btn" type="submit">Delete Record</button>
+                   <button class="btn btn-danger" type="submit">Delete Record</button>
                </form>
             </div>
         </div>

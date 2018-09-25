@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
 namespace UniversityRegistrar.Models
@@ -29,6 +30,10 @@ namespace UniversityRegistrar.Models
                 return (idEquality && nameEquality);
             }
         }
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
         public void Save()
         {
             MySqlConnection conn = DB.Connection();
@@ -45,6 +50,30 @@ namespace UniversityRegistrar.Models
             {
                 conn.Dispose();
             }
+        }
+        public static List<Student> GetAll()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT*FROM students;";
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            List<Student> allStudents = new List<Student> { };
+
+            while (rdr.Read())
+            {
+                int Id = rdr.GetInt32(0);
+                string Name = rdr.GetString(1);
+                DateTime enrollmentDate = rdr.GetDateTime(2);
+                Student newStudent = new Student(Name, enrollmentDate, Id);
+                allStudents.Add(newStudent);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return allStudents;
         }
 
     }

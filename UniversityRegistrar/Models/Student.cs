@@ -154,7 +154,8 @@ namespace UniversityRegistrar.Models
             conn.Open();
 
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"INSERT INTO courses_students (course_id, student_id) VALUES (@courseId, @studentId);";
+            cmd.CommandText = @"INSERT INTO courses_students (course_id, student_id) VALUES (@courseId, @studentId);
+            INSERT INTO courses (course_id) VALUES (@courseId);";
             cmd.Parameters.AddWithValue("@courseId", newCourse.Id);
             cmd.Parameters.AddWithValue("@studentId", this.Id);
             cmd.ExecuteNonQuery();

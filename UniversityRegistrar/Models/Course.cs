@@ -41,7 +41,7 @@ namespace UniversityRegistrar
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"INSERT INTO courses ('course_name', 'course_number') VALUES (@newCourseName, @newCourseNumber);";
+            cmd.CommandText = @"INSERT INTO courses (`course_name`, `course_number`) VALUES (@newCourseName, @newCourseNumber);";
             cmd.Parameters.AddWithValue("@newCourseName", this.CourseName);
             cmd.Parameters.AddWithValue("@newCourseNumber", this.CourseNumber);
             cmd.ExecuteNonQuery();
@@ -122,9 +122,10 @@ namespace UniversityRegistrar
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"INSERT INTO courses_students (course_id, student_id) VALUES (@courseId, @studentId);";
+            cmd.CommandText = @"INSERT INTO courses_students (course_id, student_id) VALUES (@courseId, @studentId);
+            INSERT INTO students (student_id) VALUES @studentId);";
             cmd.Parameters.AddWithValue("@courseId", this.Id);
-            cmd.Parameters.AddWithValue("@newStudentId", this.Id);
+            cmd.Parameters.AddWithValue("@studentId", newStudent.Id);
             cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)

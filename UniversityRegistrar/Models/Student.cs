@@ -100,5 +100,20 @@ namespace UniversityRegistrar.Models
             return foundStudent;
         }
 
+        public static void DeleteSingular(int deleteId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"DELETE FROM students WHERE id = @deleteId;";
+            cmd.Parameters.AddWithValue("@deleteId", deleteId);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

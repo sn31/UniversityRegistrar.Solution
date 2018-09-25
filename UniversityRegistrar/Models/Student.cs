@@ -147,5 +147,21 @@ namespace UniversityRegistrar.Models
                 conn.Dispose();
             }
         }
+        public void AddCourse(Course newCourse)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"INSERT INTO courses_students (course_id, student_id) VALUES (@courseId, @studentId);";
+            cmd.Parameters.AddWithValue("@courseId", newCourse.Id);
+            cmd.Parameters.AddWithValue("@studentId", this.Id);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
     }
 }

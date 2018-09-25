@@ -122,8 +122,8 @@ namespace UniversityRegistrar
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"INSERT INTO courses_students (course_id, student_id) VALUES (@courseId, @studentId);
-            INSERT INTO students (student_id) VALUES @studentId);";
+            cmd.CommandText = @"INSERT INTO courses_students (`course_id`, `student_id`) VALUES (@courseId, @studentId);
+            INSERT INTO students (`student_id`) VALUES @studentId);";
             cmd.Parameters.AddWithValue("@courseId", this.Id);
             cmd.Parameters.AddWithValue("@studentId", newStudent.Id);
             cmd.ExecuteNonQuery();
@@ -133,17 +133,16 @@ namespace UniversityRegistrar
                 conn.Dispose();
             }
         }
-         public List<Student> GetStudents()
+        public List<Student> GetStudents()
         {
-            List<Student> allStudents = new List<Student>{};
+            List<Student> allStudents = new List<Student> { };
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT students.* FROM students
+            cmd.CommandText = @"SELECT students.* FROM courses
             JOIN courses_students ON (courses_students.course_id = courses.id)
             JOIN students ON (courses_students.student_id = students.id)
-            WHERE course.id = @thisId
-            ;";
+            WHERE courses.id = @thisId;";
             cmd.Parameters.AddWithValue("@thisId", this.Id);
             MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -163,37 +162,37 @@ namespace UniversityRegistrar
             return allStudents;
 
         }
-        public static void DeleteSingular(int deleteId)
+        public void Delete()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = @"DELETE FROM courses WHERE id = @thisId;DELETE FROM courses_students WHERE course_id = @deleteId;";
+            cmd.Parameters.AddWithValue("@deleteId", this.Id);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
             {
-                MySqlConnection conn = DB.Connection();
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-
-                cmd.CommandText = @"DELETE FROM courses WHERE id = @thisId;";
-                cmd.Parameters.AddWithValue("@deleteId", deleteId);
-
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                if (conn != null)
-                {
-                    conn.Dispose();
-                }
+                conn.Dispose();
             }
-            public static void DeleteAll(int deleteId)
-            {
-                MySqlConnection conn = DB.Connection();
-                conn.Open();
-                MySqlCommand cmd = conn.CreateCommand();
-
-                cmd.CommandText = @"DELETE FROM courses;";
-
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                if (conn != null)
-                {
-                    conn.Dispose();
-                }
-            }
-
         }
+        public static void DeleteAll()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = @"DELETE FROM courses;";
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
     }
+}

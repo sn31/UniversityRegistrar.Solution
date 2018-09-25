@@ -35,6 +35,10 @@ namespace UniversityRegistrar.Models
         {
             return this.Name.GetHashCode();
         }
+        public override string ToString()
+        {
+             return String.Format("{{ id={0}, name={1}, date={2}}}", Id, Name, enrollmentDate);
+        }
         public void Save()
         {
             MySqlConnection conn = DB.Connection();
@@ -101,13 +105,13 @@ namespace UniversityRegistrar.Models
             return foundStudent;
         }
 
-        public static void DeleteSingular(int deleteId)
+        public void Delete()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"DELETE FROM students WHERE id = @deleteId;";
-            cmd.Parameters.AddWithValue("@deleteId", deleteId);
+            cmd.CommandText = @"DELETE FROM courses_students WHERE student_id = @deleteId;DELETE FROM students WHERE id = @deleteId;";
+            cmd.Parameters.AddWithValue("@deleteId", this.Id);
             cmd.ExecuteNonQuery();
 
             conn.Close();
@@ -154,8 +158,7 @@ namespace UniversityRegistrar.Models
             conn.Open();
 
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"INSERT INTO courses_students (course_id, student_id) VALUES (@courseId, @studentId);
-            INSERT INTO courses (course_id) VALUES (@courseId);";
+            cmd.CommandText = @"INSERT INTO courses_students (`course_id`, `student_id`) VALUES (@courseId, @studentId);";
             cmd.Parameters.AddWithValue("@courseId", newCourse.Id);
             cmd.Parameters.AddWithValue("@studentId", this.Id);
             cmd.ExecuteNonQuery();
@@ -172,8 +175,8 @@ namespace UniversityRegistrar.Models
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"SELECT courses.* FROM students
-            JOIN courses_students ON (courses_students.course_id = courses.id)
-            JOIN students ON (courses_students.student_id = students.id)
+            JOIN courses_students ON (students.id = courses_students.student_id)
+            JOIN courses ON (courses_students.course_id = courses.id)
             WHERE students.id = @thisId
             ;";
             cmd.Parameters.AddWithValue("@thisId", this.Id);

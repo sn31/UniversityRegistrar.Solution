@@ -122,8 +122,7 @@ namespace UniversityRegistrar
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"INSERT INTO courses_students (`course_id`, `student_id`) VALUES (@courseId, @studentId);
-            INSERT INTO students (`student_id`) VALUES @studentId);";
+            cmd.CommandText = @"INSERT INTO courses_students (`course_id`, `student_id`) VALUES (@courseId, @studentId);";
             cmd.Parameters.AddWithValue("@courseId", this.Id);
             cmd.Parameters.AddWithValue("@studentId", newStudent.Id);
             cmd.ExecuteNonQuery();
@@ -168,7 +167,7 @@ namespace UniversityRegistrar
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"DELETE FROM courses WHERE id = @thisId;DELETE FROM courses_students WHERE course_id = @deleteId;";
+            cmd.CommandText = @"DELETE FROM courses WHERE id = @deleteId;DELETE FROM courses_students WHERE course_id = @deleteId;";
             cmd.Parameters.AddWithValue("@deleteId", this.Id);
 
             cmd.ExecuteNonQuery();

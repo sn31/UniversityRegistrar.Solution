@@ -107,13 +107,13 @@ namespace UniversityRegistrar.Tests
         [TestMethod]
         public void Test_AddStudent_AddsStudentToCourse()
         {
-            Course testCourse = new Course("Household chores", "Econ101");
+            Course testCourse = new Course("Chemistry", "CHEM");
             testCourse.Save();
 
-            Student testStudent = new Student("Mow the lawn", DateTime.MinValue);
+            Student testStudent = new Student("Molly", DateTime.MinValue);
             testStudent.Save();
 
-            Student testStudent2 = new Student("Water the garden", DateTime.MinValue);
+            Student testStudent2 = new Student("Bob", DateTime.MinValue);
             testStudent2.Save();
 
             //Act
@@ -121,8 +121,6 @@ namespace UniversityRegistrar.Tests
             testCourse.AddStudent(testStudent2);
             List<Student> result = testCourse.GetStudents();
             List<Student> testList = new List<Student> { testStudent, testStudent2 };
-            Console.WriteLine(result.Count);
-            Console.WriteLine(testList.Count);
             //Assert
             CollectionAssert.AreEqual(testList, result);
         }
@@ -131,13 +129,13 @@ namespace UniversityRegistrar.Tests
         public void GetStudents_ReturnsAllCourseStudents_StudentList()
         {
             //Arrange
-            Course testCourse = new Course("Household chores", "Econ101");
+            Course testCourse = new Course("Chemistry", "CHEM");
             testCourse.Save();
 
-            Student testStudent1 = new Student("Mow the lawn", DateTime.MinValue);
+            Student testStudent1 = new Student("Molly", DateTime.MinValue);
             testStudent1.Save();
 
-            Student testStudent2 = new Student("Buy plane ticket", DateTime.MinValue);
+            Student testStudent2 = new Student("Bill", DateTime.MinValue);
             testStudent2.Save();
 
             //Act

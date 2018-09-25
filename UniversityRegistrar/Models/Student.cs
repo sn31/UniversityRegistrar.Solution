@@ -27,7 +27,8 @@ namespace UniversityRegistrar.Models
                 Student newStudent = (Student) otherStudent;
                 bool idEquality = this.Id == newStudent.Id;
                 bool nameEquality = this.Name == newStudent.Name;
-                return (idEquality && nameEquality);
+                bool enrollmentEquality = this.enrollmentDate == newStudent.enrollmentDate;
+                return (idEquality && nameEquality && enrollmentEquality);
             }
         }
         public override int GetHashCode()

@@ -1,0 +1,13 @@
+@{
+Layout = "_Layout";
+}
+<h1>Add a new course</h1>
+<form class="form-group" action='/courses' method='post'>
+    <label>Course Name
+        <input type="text" name="newName" class="form-control" required>
+    </label>
+    <label>Course Number
+        <input type="text" name="newNumber" class="form-control" required>
+    </label>
+    <button class="btn" type="submit">Submit</button>
+</form>

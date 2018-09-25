@@ -4,6 +4,61 @@ Layout = "_Layout";
 
 <h1>Available Courses</h1>
 
-<button onclick="window.location.href='/'">Go Home</button>
+<button onclick="window.location.href='/'">Go Home</button><hr>
 
-<body
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h6>Course Name</h6>
+        </div>
+        <div class="col">
+             <h6>Course Number</h6>
+        </div>
+        <div class="col">
+             <h6>Current Students</h6>
+        </div>
+        <div class="col">
+             <h6>Add Students</h6>
+        </div>
+        <div class="col">
+             <h6>Update Course</h6>
+        </div>
+        <div class="col">
+             <h6>Delete Course</h6>
+        </div>
+    </div>
+    @foreach(var course in @Model["courses"])
+    {
+        <div class="row">
+            <div class="col">
+                <p>@course.CourseName</p>
+            </div>
+            <div class="col">
+                <p>@course.CourseNumber</p>
+            </div>
+            <div class="col">
+                @foreach(var student in @Model["students"])
+                {
+                    <p>@student.Name</p>
+                }
+            </div>
+             <div class="col">
+               <form class="form-group" action='/courses/@course.Id/students/new' method='post'>
+                   <button class="btn btn-success" type="submit">Add Students</button>
+               </form>
+            </div>
+            <div class="col">
+               <form class="form-group" action='/courses/@course.Id/update' method='post'>
+                   <button class="btn btn-info" type="submit">Update Course</button>
+               </form>
+            </div>
+            <div class="col">
+                <form class="form-group" action='/courses/' method='post'>
+                   <button class="btn btn-danger" type="submit">Delete Course</button>
+               </form>
+            </div>
+        </div>
+
+    }
+    
+</div>

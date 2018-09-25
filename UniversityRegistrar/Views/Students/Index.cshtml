@@ -33,9 +33,9 @@ Layout = "_Layout";
                 <p>@student.enrollmentDate</p>
             </div>
             <div class="col">
-                @foreach(var course in @student.GetCourses())
+                @foreach(var course in @Model["courses"])
                 {
-                    <p>@course.CourseName + " " + @course.CourseNumber</p>
+                    <p>@course.CourseName @course.CourseNumber</p>
                 }
             </div>
             <div class="col">

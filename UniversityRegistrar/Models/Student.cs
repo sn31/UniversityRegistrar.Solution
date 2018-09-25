@@ -115,5 +115,37 @@ namespace UniversityRegistrar.Models
                 conn.Dispose();
             }
         }
+        public static void DeleteAll()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"DELETE FROM students";
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+        public void Update(string newName, DateTime newEnrollmentDate)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"UPDATE students SET name = @newName,enrollment_date = @newEnrollmentDate WHERE id = @thisId;"; //This might not work!!!!
+            cmd.Parameters.AddWithValue("@newName", newName);
+            cmd.Parameters.AddWithValue("@newEnrollmentDate", newEnrollmentDate);
+            cmd.Parameters.AddWithValue("@thisId", this.Id);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
     }
 }
